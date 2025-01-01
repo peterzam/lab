@@ -1,0 +1,15 @@
+services:
+  big-agi:
+    image: ghcr.io/enricoros/big-agi:latest
+    container_name: big-agi
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+    command: ["next", "start", "-p", "3000"]
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_BIG-AGI}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
