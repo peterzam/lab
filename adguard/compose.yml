@@ -1,0 +1,17 @@
+services:
+  adguard:
+    image: adguard/adguardhome:latest
+    container_name: adguard
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_ADGUARD}
+    ports:
+      - ${IP_ENDPOINT}:53:53/udp
+    volumes:
+      - ${LAB_PATH}/mount/adguard/work:/opt/adguardhome/work
+      - ${LAB_PATH}/mount/adguard/conf:/opt/adguardhome/conf
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
