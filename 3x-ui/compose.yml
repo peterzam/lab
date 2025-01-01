@@ -1,0 +1,18 @@
+services:
+  3x-ui:
+    image: ghcr.io/mhsanaei/3x-ui:latest
+    container_name: 3x-ui
+    volumes:
+      - ${LAB_PATH}/mount/3x-ui/db/:/etc/x-ui/
+      - ${LAB_PATH}/mount/3x-ui/cert/:/root/cert/
+    ports:
+      - ${IP_PUBLIC}:2001-2010:2001-2010/tcp
+      - ${IP_PUBLIC}:2001-2010:2001-2010/udp
+    restart: unless-stopped
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_3X-UI}
+
+networks:
+  caddy-io:
+    external: true
