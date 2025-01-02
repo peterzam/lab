@@ -1,0 +1,24 @@
+services:
+  caddy:
+    image: caddy
+    container_name: caddy
+    volumes:
+      - ${LAB_PATH}/mount/caddy:/etc/caddy
+      - /etc/ssl/lab:/etc/ssl/lab
+      # - ${LAB_PATH}/mount/nextcloud:/nextcloud/var/www/html
+      # - ${LAB_PATH}/mount/piped/proxy:/piped/proxy
+    ports:
+      - ${IP_ENDPOINT}:80:80
+      - ${IP_ENDPOINT}:443:443
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_CADDY}
+      safe-io:
+        ipv4_address: ${IP_CADDY_SAFENET}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
+  safe-io:
+    external: true
