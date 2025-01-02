@@ -1,0 +1,14 @@
+services:
+  browserless:
+    image: browserless/chrome:latest
+    container_name: browserless
+    environment:
+      - MAX_CONCURRENT_SESSIONS=10
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_BROWSERLESS}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
