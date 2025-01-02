@@ -1,0 +1,22 @@
+services:
+  chromium:
+    image: lscr.io/linuxserver/chromium:latest
+    container_name: chromium
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=Etc/UTC
+      - DOCKER_MODS=linuxserver/mods:universal-internationalization
+      - LC_ALL=my_MM.UTF-8
+    volumes:
+      - ${LAB_PATH}/mount/chromium:/config
+      - ${LAB_PATH}/public/chromium:/public
+    shm_size: "1gb"
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_CHROMIUM}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
