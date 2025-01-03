@@ -1,0 +1,21 @@
+services:
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:9
+    container_name: forgejo
+    environment:
+      - USER_UID=${PUID}
+      - USER_GID=${PGID}
+    volumes:
+      - ${LAB_PATH}/mount/forgejo:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - ${IP_ENDPOINT}:50022:22
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_FORGEJO}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
