@@ -1,0 +1,17 @@
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser
+    user: ${PUID}:${PGID}
+    command: "--baseurl /filebrowser"
+    volumes:
+      - ${LAB_PATH}/public:/srv
+      - ${LAB_PATH}/mount/filebrowser/database.db:/database.db
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_FILEBROWSER}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
