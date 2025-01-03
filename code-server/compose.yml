@@ -1,0 +1,21 @@
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=Etc/UTC
+      - SUDO_PASSWORD_HASH=${CODESERVER_SUDO_PASSWORD}
+      - PROXY_DOMAIN=code.${LAB_DOMAIN}
+      - DEFAULT_WORKSPACE=/config/workspace
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_CODE-SERVER}
+    volumes:
+      - ${LAB_PATH}/mount/code-server:/config
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
