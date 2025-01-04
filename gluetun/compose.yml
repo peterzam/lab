@@ -1,0 +1,20 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    environment:
+      - TZ=Etc/UTC
+      - VPN_SERVICE_PROVIDER=custom
+      - VPN_TYPE=wireguard
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_GLUETUN}
+    volumes:
+      - ${LAB_PATH}/mount/gluetun/wg0.conf:/gluetun/wireguard/wg0.conf:ro
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
