@@ -1,0 +1,18 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    user: ${PUID}:${PGID}
+    volumes:
+      - ${LAB_PATH}/mount/jellyfin:/config
+      - ${LAB_PATH}/public:/media
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://jellyfin.${LAB_DOMAIN}
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_JELLYFIN}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
