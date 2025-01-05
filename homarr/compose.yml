@@ -1,0 +1,16 @@
+services:
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    volumes:
+      - ${LAB_PATH}/mount/homarr/configs:/app/data/configs
+      - ${LAB_PATH}/mount/homarr/icons:/app/public/icons
+      - ${LAB_PATH}/mount/homarr/data:/data
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_HOMARR}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
