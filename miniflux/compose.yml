@@ -1,0 +1,21 @@
+services:
+  miniflux:
+    image: miniflux/miniflux:latest
+    container_name: miniflux
+    environment:
+      - DATABASE_URL=postgres://${MINIFLUX_POSTGRES_USER}:${MINIFLUX_POSTGRES_PASSWORD}@postgres/miniflux?sslmode=disable
+      - RUN_MIGRATIONS=1
+      # - CREATE_ADMIN=1
+      # - ADMIN_USERNAME=admin
+      # - ADMIN_PASSWORD=admin
+      - BASE_URL=https://${LAB_DOMAIN}/miniflux
+    healthcheck:
+      test: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_MINIFLUX}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
