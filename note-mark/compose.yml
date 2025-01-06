@@ -1,0 +1,18 @@
+services:
+  note-mark:
+    container_name: note-mark
+    image: ghcr.io/enchant97/note-mark-aio
+    volumes:
+      - ${LAB_PATH}/mount/note-mark:/data
+    environment:
+      - JWT_SECRET=${NOTE-MARK_JWT_SECRET}
+      - CORS_ORIGINS=note.${LAB_DOMAIN}
+      - ALLOW_SIGNUP=false
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_NOTE-MARK}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
