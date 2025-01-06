@@ -1,0 +1,38 @@
+services:
+  nextcloud:
+    image: nextcloud:fpm-alpine
+    container_name: nextcloud
+    mem_limit: 2048m
+    mem_reservation: 512m
+    environment:
+      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.${LAB_DOMAIN}
+      NEXTCLOUD_DATA_DIR: /var/www/data
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: nextcloud
+      POSTGRES_USER: ${NEXTCLOUD_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${NEXTCLOUD_POSTGRES_PASSWORD}
+      REDIS_HOST: nextcloud-redis
+      REDIS_HOST_PASSWORD: ${NEXTCLOUD_REDIS_PASSWORD}
+    volumes:
+      - ${LAB_PATH}/public/nextcloud:/var/www/data
+      - ${LAB_PATH}/mount/nextcloud:/var/www/html
+    command: sh -c 'chown www-data:www-data /var/www/data && /entrypoint.sh php-fpm'
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_NEXTCLOUD}
+    restart: unless-stopped
+
+  nextcloud-redis:
+    container_name: nextcloud-redis
+    image: redis:alpine
+    mem_limit: 2048m
+    mem_reservation: 512m
+    command: redis-server --requirepass ${NEXTCLOUD_REDIS_PASSWORD}
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_NEXTCLOUD-REDIS}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
