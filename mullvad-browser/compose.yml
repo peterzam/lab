@@ -1,0 +1,20 @@
+services:
+  mullvad-browser:
+    image: lscr.io/linuxserver/mullvad-browser:latest
+    container_name: mullvad-browser
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=Etc/UTC
+    volumes:
+      - ${LAB_PATH}/mount/mullvad-browser:/config
+      - ${LAB_PATH}/public/mullvad-browser:/public
+    shm_size: "1gb"
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_MULLVAD-BROWSER}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
