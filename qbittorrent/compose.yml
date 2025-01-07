@@ -1,0 +1,22 @@
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=Etc/UTC
+      - WEBUI_PORT=8080
+    volumes:
+      - ${LAB_PATH}/mount/qbittorrent/config:/config
+      - ${LAB_PATH}/public/qbittorrent:/downloads
+    ports:
+      - ${IP_PUBLIC}:59926:59926
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_BITTORRENT}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
