@@ -1,0 +1,15 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:alpine
+    container_name: portainer
+    volumes:
+      - ${LAB_PATH}/mount/portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      grafana-io:
+        ipv4_address: ${IP_PORTAINER_GRAFANA}
+    restart: unless-stopped
+
+networks:
+  grafana-io:
+    external: true
