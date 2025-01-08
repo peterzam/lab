@@ -1,0 +1,33 @@
+services:
+  searxng:
+    image: searxng/searxng
+    container_name: searxng
+    environment:
+      INSTANCE_NAME: SearXNG
+      SEARXNG_SECRET: ${SEARXNG_SECRET}
+      SEARXNG_REDIS_URL: redis://:${SEARXNG_SECRET}@redis:6379/0
+      SEARXNG_STATIC_USE_HASH: true
+      SEARXNG_IMAGE_PROXY: true
+    volumes:
+      - ${LAB_PATH}/mount/searxng:/etc/searxng
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_SEARXNG}
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    container_name: searxng-redis
+    image: redis:alpine
+    mem_limit: 2048m
+    mem_reservation: 512m
+    command: redis-server --requirepass ${SEARXNG_SECRET}
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_SEARXNG-REDIS}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
