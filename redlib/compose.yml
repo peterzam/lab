@@ -1,0 +1,17 @@
+services:
+  redlib:
+    image: quay.io/redlib/redlib:latest
+    container_name: redlib
+    environment:
+      - REDLIB_DEFAULT_THEME=doomone
+      - REDLIB_DEFAULT_LAYOUT=clean
+      - REDLIB_DEFAULT_SUBSCRIPTIONS=${REDLIB_SUBS}
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_REDLIB}
+    restart: unless-stopped
+    # dns_search: []
+
+networks:
+  caddy-io:
+    external: true
