@@ -1,0 +1,33 @@
+services:
+  simplex-smp:
+    image: simplexchat/smp-server:latest
+    container_name: simplex-smp
+    environment:
+      - ADDR=${IP_SIMPLEX-SMP}
+      - PASS=${SIMPLEX_SMP_SECRET}
+    volumes:
+      - ${LAB_PATH}/mount/simplex/smp/config:/etc/opt/simplex
+      - ${LAB_PATH}/mount/simplex/smp/logs:/var/opt/simplex
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_SIMPLEX-SMP}
+    restart: unless-stopped
+
+  simplex-xftp:
+    image: simplexchat/xftp-server:latest
+    container_name: simplex-xftp
+    environment:
+      - ADDR=${IP_SIMPLEX-XFTP}
+      - QUOTA=10gb
+    volumes:
+      - ${LAB_PATH}/mount/simplex/xftp/config:/etc/opt/simplex-xftp
+      - ${LAB_PATH}/mount/simplex/xftp/logs:/var/opt/simplex-xftp
+      - ${LAB_PATH}/mount/simplex/xftp/files:/srv/xftp
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_SIMPLEX-XFTP}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
