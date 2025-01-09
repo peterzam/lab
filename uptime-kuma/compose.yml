@@ -1,0 +1,18 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:alpine
+    container_name: uptime-kuma
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=Etc/UTC
+    volumes:
+      - ${LAB_PATH}/mount/uptime-kuma:/app/data
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_UPTIME-KUMA}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
