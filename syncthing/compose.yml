@@ -1,0 +1,23 @@
+services:
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=Etc/UTC
+    volumes:
+      - ${LAB_PATH}/mount/syncthing:/config
+      - ${LAB_PATH}/public:/public
+    # ports:
+    # - ${IP_ENDPOINT}:22000:22000/tcp
+    # - ${IP_ENDPOINT}:22000:22000/udp
+    # - ${IP_ENDPOINT}:21027:21027/udp
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_SYNCTHING}
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
