@@ -1,0 +1,20 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest-alpine
+    container_name: vaultwarden
+    environment:
+      # - ADMIN_TOKEN=''
+      - SHOW_PASSWORD_HINT=false
+      - DOMAIN=https://vault.${LAB_DOMAIN}
+      - SIGNUPS_ALLOWED=false
+        # - SMTP_DEBUG=true
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_VAULTWARDEN}
+    volumes:
+      - ${LAB_PATH}/mount/vaultwarden:/data
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
