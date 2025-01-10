@@ -13,12 +13,12 @@ services:
     networks:
       caddy-io:
         ipv4_address: ${IP_CADDY}
-      safe-io:
-        ipv4_address: ${IP_CADDY_SAFENET}
+      grafana-io:
+        ipv4_address: ${IP_CADDY_GRAFANA}
     restart: unless-stopped
 
 networks:
   caddy-io:
     external: true
-  safe-io:
+  grafana-io:
     external: true
