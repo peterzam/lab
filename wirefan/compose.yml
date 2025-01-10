@@ -1,0 +1,15 @@
+services:
+  wirefan:
+    image: peterzam/wirefan:latest
+    build:
+      dockerfile: Containerfile
+    container_name: wirefan
+    networks:
+      caddy-io:
+        ipv4_address: ${IP_WIREFAN}
+    command: --mode=socks
+    restart: unless-stopped
+
+networks:
+  caddy-io:
+    external: true
