@@ -16,11 +16,11 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    container_name: monitoring_prometheus
+    container_name: prometheus
     user: ${PUID}:${PGID}
     volumes:
-      - ${LAB_PATH}/mount/monitoring/prometheus/config:/etc/prometheus/
-      - ${LAB_PATH}/mount/monitoring/prometheus/data:/prometheus
+      - ${LAB_PATH}/mount/grafana/prometheus/config:/etc/prometheus/
+      - ${LAB_PATH}/mount/grafana/prometheus/data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
     networks:
@@ -30,7 +30,7 @@ services:
 
   node-exporter:
     image: prom/node-exporter:latest
-    container_name: monitoring_node_exporter
+    container_name: node_exporter
     networks:
       grafana-io:
         ipv4_address: ${IP_NODE_EXPORTER_GRAFANA}
@@ -38,7 +38,7 @@ services:
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
-    container_name: monitoring_cadvisor
+    container_name: cadvisor
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
