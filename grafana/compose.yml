@@ -33,7 +33,7 @@ services:
     container_name: monitoring_node_exporter
     networks:
       grafana-io:
-        ipv4_address: ${IP_NODE-EXPORTER_GRAFANA}
+        ipv4_address: ${IP_NODE_EXPORTER_GRAFANA}
     restart: unless-stopped
 
   cadvisor:

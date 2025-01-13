@@ -7,7 +7,7 @@ services:
     command: ["next", "start", "-p", "3000"]
     networks:
       caddy-io:
-        ipv4_address: ${IP_BIG-AGI}
+        ipv4_address: ${IP_BIG_AGI}
     restart: unless-stopped
 
 networks:

@@ -5,12 +5,12 @@ services:
     volumes:
       - ${LAB_PATH}/mount/note-mark:/data
     environment:
-      - JWT_SECRET=${NOTE-MARK_JWT_SECRET}
+      - JWT_SECRET=${NOTE_MARK_JWT_SECRET}
       - CORS_ORIGINS=note.${LAB_DOMAIN}
       - ALLOW_SIGNUP=false
     networks:
       caddy-io:
-        ipv4_address: ${IP_NOTE-MARK}
+        ipv4_address: ${IP_NOTE_MARK}
     restart: unless-stopped
 
 networks:

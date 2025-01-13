@@ -25,7 +25,7 @@ services:
     command: redis-server --requirepass ${SEARXNG_SECRET}
     networks:
       caddy-io:
-        ipv4_address: ${IP_SEARXNG-REDIS}
+        ipv4_address: ${IP_SEARXNG_REDIS}
     restart: unless-stopped
 
 networks:
